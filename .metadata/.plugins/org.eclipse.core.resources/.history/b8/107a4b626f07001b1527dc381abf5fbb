@@ -1,0 +1,58 @@
+package manager;
+
+import java.util.Hashtable;
+
+import account.UserAccount;
+import enums.UserPosition;
+
+public class CredentialManager {
+
+	Hashtable<String, UserAccount> userAccountDB;
+	private int lastID = 0;
+	
+	private String fetchNextID() {
+		int result = lastID;
+		lastID++;
+		return "" + result;
+	}
+	
+	private static CredentialManager INSTANCE;
+	
+	private CredentialManager() {
+		this.userAccountDB = new Hashtable<String, UserAccount>();
+	}
+
+	public static CredentialManager getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new CredentialManager();
+		}
+		
+		return INSTANCE;
+	}
+	
+	public void addUser(String id,
+						String pwd,
+						String name,
+						UserPosition position
+						) {
+		
+	}
+	
+	public boolean hasUser (String id) {
+		return false;
+	}
+	
+	public void deleteUser (String id) {
+		
+	}
+	
+	public UserAccount getAccount (	String id,
+									String pwd
+								) {
+		return null;
+	}
+	
+	
+	
+	
+}

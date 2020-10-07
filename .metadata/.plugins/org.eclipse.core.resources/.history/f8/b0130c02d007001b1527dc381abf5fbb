@@ -1,0 +1,31 @@
+package service;
+
+import manager.OrderManager;
+
+public class PaymentService {
+	
+	OrderManager orderDB;
+	
+	private static PaymentService INSTANCE;
+
+	private PaymentService() {
+	}
+	
+	public static PaymentService getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new PaymentService();
+		}
+		
+		return INSTANCE;
+	}
+	
+	public boolean requestPurchase(String id) {
+		return true;
+	}
+
+	public void successfulPurchase(String id) {
+		OrderManager.getInstance();
+		orderDB.payOrder(id);
+	}
+}
+	

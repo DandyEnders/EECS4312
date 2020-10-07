@@ -1,0 +1,18 @@
+package test;
+
+import static org.junit;
+
+import org.junit.Before;
+
+import manager.CredentialManager;
+
+public class Login {
+
+	CredentialManager userDB;
+	
+	@Before
+	static void initAll() {
+		
+	}
+
+}

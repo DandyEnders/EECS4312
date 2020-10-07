@@ -1,0 +1,33 @@
+package account;
+
+import manager.MenuManager;
+import manager.OrderManager;
+
+public class Manager extends UserAccount {
+
+	MenuManager menuDB;
+	OrderManager orderDB;
+	
+	public Manager(String id, String pwd, String name, String phoneNumber) {
+		super(id, pwd, name, phoneNumber);
+		
+		this.menuDB = MenuManager.getInstance();
+		this.orderDB = OrderManager.getInstance();
+	}
+	
+	public String getOrderInfo() {
+		return orderDB.getOrderInfo();
+	}
+	
+	public void addOrder() {
+		
+	}
+	
+	public void changeOrderedPerson(String orderID, UserAccount newAccount) {
+		orderDB.getOrder(orderID).orderedBy = newAccount;
+	}
+	
+	
+	
+	
+}

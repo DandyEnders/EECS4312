@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="items.FoodItem"/>
+    <fullyQualifiedTypeName name="java.util.Hashtable"/>
+    <fullyQualifiedTypeName name="account.UserAccount"/>
+    <fullyQualifiedTypeName name="java.util.LinkedList"/>
+    <fullyQualifiedTypeName name="manager.CredentialManager"/>
+    <fullyQualifiedTypeName name="enums.UserPosition"/>
+    <fullyQualifiedTypeName name="org.junit.Test"/>
+    <fullyQualifiedTypeName name="account.Client"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="manager.MenuManager"/>
+    <fullyQualifiedTypeName name="service.PaymentService"/>
+    <fullyQualifiedTypeName name="org.junit.Before"/>
+    <fullyQualifiedTypeName name="org.junit.FixMethodOrder"/>
+    <fullyQualifiedTypeName name="enums.FoodSize"/>
+    <fullyQualifiedTypeName name="account.Manager"/>
+    <fullyQualifiedTypeName name="service.DeliveryService"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="manager.OrderManager"/>
+    <fullyQualifiedTypeName name="items.FoodOrder"/>
+    <fullyQualifiedTypeName name="enums.OrderStatus"/>
+</qualifiedTypeNameHistroy>

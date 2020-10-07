@@ -1,0 +1,9 @@
+package manager;
+
+public class MenuManager {
+
+	public MenuManager() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

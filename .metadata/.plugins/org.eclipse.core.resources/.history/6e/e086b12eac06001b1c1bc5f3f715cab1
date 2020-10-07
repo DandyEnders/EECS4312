@@ -1,0 +1,8 @@
+package items;
+
+public class FoodItem {
+
+	String id;
+	UserAccount orderedB;
+	
+}

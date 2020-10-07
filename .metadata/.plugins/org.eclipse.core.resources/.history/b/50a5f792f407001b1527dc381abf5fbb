@@ -1,0 +1,63 @@
+package account;
+
+import enums.FoodSize;
+import items.FoodOrder;
+import manager.MenuManager;
+import manager.OrderManager;
+
+public class Manager extends UserAccount {
+
+	MenuManager menuDB;
+	OrderManager orderDB;
+	
+	public Manager(String id, String pwd, String name, String phoneNumber) {
+		super(id, pwd, name, phoneNumber);
+		
+		this.menuDB = MenuManager.getInstance();
+		this.orderDB = OrderManager.getInstance();
+	}
+	
+	public String getOrderInfo() {
+		return orderDB.getOrderInfo();
+	}
+	
+	public String getMenuByCategories() {
+		return menuDB.getMenuByCategories().toString();
+	}
+	
+	public void addOrder(UserAccount orderedBy,
+						String deliverAddress) {
+		orderDB.addOrder(new FoodOrder("-1", orderedBy, deliverAddress));
+	}
+	
+	public void changeOrderedPerson(String orderID, UserAccount newAccount) {
+		orderDB.getOrder(orderID).orderedBy = newAccount;
+	}
+	
+	public void addFood(String orderID, String foodName, FoodSize size) {
+		orderDB.getOrder(orderID).addFoodItem(foodName, size);
+	}
+	
+	public void removeFood(String orderID, String foodName, FoodSize size) {
+		orderDB.getOrder(orderID).removeFoodItem(foodName, size);
+	}
+	
+	public void changeDeliveryAddress(String orderID, String newAddress) {
+		orderDB.getOrder(orderID).deliverAddress = newAddress;
+	}
+	
+	public void addFoodMenu(String name,
+							double price,
+							String ingredients,
+							String allergens,
+							String dimensions,
+							String subjectCategory,
+							String nutrition) {
+		menuDB.addFoodMenu(name, price, ingredients, allergens, dimensions, subjectCategory, nutrition);
+	}
+	
+	public void removeFoodMenu(String name) {
+		menuDB.removeFoodMenu(name);
+	}
+	
+}

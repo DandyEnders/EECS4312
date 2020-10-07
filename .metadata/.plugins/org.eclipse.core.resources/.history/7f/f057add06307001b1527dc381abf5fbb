@@ -1,0 +1,71 @@
+package items;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import account.UserAccount;
+import enums.FoodSize;
+import enums.OrderStatus;
+import manager.MenuManager;
+
+public class FoodOrder {
+
+	public String id;
+	public UserAccount orderedBy;
+	public List<FoodItem> foodList;
+	public String deliverAddress;
+	public OrderStatus status;
+	private MenuManager menuDB;
+	
+	public FoodOrder(String id,
+					 UserAccount orderedBy,
+					 String deliverAddress,
+					 FoodSize size
+					) {
+		this.id = id;
+		this.orderedBy = orderedBy;
+		this.foodList = new ArrayList<FoodItem>();
+		this.deliverAddress = deliverAddress;
+		this.status = OrderStatus.UNPAID;
+		this.menuDB = MenuManager.getInstance();
+	}
+	
+	public void addFoodItem(String name, FoodSize size) {
+		if (!hasFoodItem(name)) {
+			foodList.add(menuDB.getFooditem(name));
+		}
+	}
+	
+	public void removeFoodItem(String name) {
+		foodList.removeIf(item -> item.name.equals(name));
+	}
+	
+	public List<String> getFoodNameList() {
+		List<String> result = new ArrayList<String>();
+		
+		for (FoodItem item: foodList) {
+			result.add(item.name);
+		}
+		
+		return result;
+	}
+	
+	public boolean hasFoodItem(String name) {
+		boolean result = false;
+		for (FoodItem item: foodList) {
+			if (item.name.equals(name)) {
+				result = true;
+			}
+		}
+		return result;
+	}
+	
+	public double getTotal() {
+		double result = 0;
+		
+		for (FoodItem item: foodList) {
+			result += item.price;
+		}
+		return result;
+	}
+}

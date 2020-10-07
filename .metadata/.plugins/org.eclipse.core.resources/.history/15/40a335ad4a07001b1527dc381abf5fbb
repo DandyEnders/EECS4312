@@ -1,0 +1,33 @@
+package items;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import manager.OrderManager;
+
+public class ShoppingCart {
+
+	List<FoodItem> foodList;
+	OrderManager orderDB;
+	
+	public ShoppingCart() {
+		this.foodList = new LinkedList<FoodItem>();
+		this.orderDB = OrderManager.getInstance();
+	}
+	
+	public void addItem(String name) {
+		
+	}
+	
+	public void deleteItem(String name) {
+		
+	}
+	
+	public List<FoodItem> getCurrentOrderList(){
+		return null;
+	}
+	
+	public void placeOrder(String deliverAddress) {
+		
+	}
+}

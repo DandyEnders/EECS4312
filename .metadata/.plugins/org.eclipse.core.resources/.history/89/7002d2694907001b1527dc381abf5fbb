@@ -1,0 +1,34 @@
+package manager;
+
+import java.util.Hashtable;
+
+import account.UserAccount;
+
+public class CredentialManager {
+
+	Hashtable<String, UserAccount> userAccountDB;
+	
+	private static CredentialManager INSTANCE;
+	
+	private CredentialManager() {
+		this.userAccountDB = new Hashtable<String, UserAccount>();
+	}
+
+	public static CredentialManager getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new CredentialManager();
+		}
+		
+		return INSTANCE;
+	}
+	
+	public void addUser(String id,
+						String pwd,
+						String name,
+						UserPosition position
+						) {
+		
+	}
+	
+	
+}

@@ -1,0 +1,20 @@
+package test;
+
+import org.junit.*;
+
+import enums.UserPosition;
+import manager.CredentialManager;
+
+public class Login {
+
+	CredentialManager userDB;
+	
+	@Before
+	void initAll() {
+		userDB = CredentialManager.getInstance();
+		userDB.addUser("user123", "123", "Minh", UserPosition.CLIENT);
+		userDB.addUser("manager123", "123", "Kevin", UserPosition.MANAGER);
+		userDB.addUser("system123", "123", "Jinho", UserPosition.SYSTEM);
+	}
+
+}

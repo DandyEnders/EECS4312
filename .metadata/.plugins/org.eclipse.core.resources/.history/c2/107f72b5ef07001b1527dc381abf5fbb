@@ -1,0 +1,109 @@
+package manager;
+
+import java.util.Hashtable;
+
+import account.Client;
+import enums.OrderStatus;
+import items.FoodOrder;
+import service.DeliveryService;
+import service.PaymentService;
+
+public class OrderManager {
+	
+	public Hashtable<String, FoodOrder> orderDB;
+	public PaymentService paymentSystem;
+	public DeliveryService deliverySystem;
+	private int lastID = 0;
+	
+	private String fetchNextID() {
+		int result = lastID;
+		lastID += 1;
+		return "" + result;
+	}
+	
+	
+	private static OrderManager INSTANCE;
+	
+	private OrderManager() {
+		this.orderDB = new Hashtable<String, FoodOrder>();
+		this.paymentSystem = PaymentService.getInstance();
+		this.deliverySystem = DeliveryService.getInstance();
+	}
+	
+	public static OrderManager getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new OrderManager();
+		}
+		return INSTANCE;
+	}
+
+	
+	public String addOrder (FoodOrder order) {
+		String tempid = fetchNextID();
+		java.lang.System.out.println(tempid);
+		FoodOrder tempOrder = new FoodOrder(tempid, order.orderedBy, order.deliverAddress);
+		
+		orderDB.put(tempid, tempOrder);
+		
+		return tempid;
+	}
+	
+	public boolean hasOrder (String id) {
+		return orderDB.containsKey(id);
+	}
+	
+	public FoodOrder getOrder (String id) {
+		return orderDB.get(id);
+	}
+	
+	public String getOrderInfo () {
+		String result = "";
+		
+		for (String key: orderDB.keySet()) {
+			result += key + ": {\n";
+			
+			result += orderDB.get(key).getInfo();
+			result += "}\n";
+		}
+		
+		return result;
+		
+	}
+	
+	public OrderStatus checkOrderStatus (String id) {
+		return orderDB.get(id).status;
+	}
+	
+	public void requestPayment(String id) {
+		this.paymentSystem.requestPurchase(id);
+	}
+	
+	public void requestDelivery(String id) {
+		this.deliverySystem.requestDelivery(id);
+	}
+	
+	public void requestCancelOrder(String id) {
+		this.paymentSystem.refundRequst(id);
+	}
+	
+	public void payOrder (String id) {
+		getOrder(id).status = OrderStatus.PAID;
+		requestDelivery(id);
+	}
+	
+	public void deliverOrder (String id) {
+		getOrder(id).status = OrderStatus.DELIVERING;
+	}
+	
+	public void signOrder (String id) {
+		getOrder(id).status = OrderStatus.SIGNED_FOR;
+		Client temp = (Client) getOrder(id).orderedBy;
+		temp.newOrder();
+	}
+	
+	public void cancelOrder (String id) {
+		getOrder(id).status = OrderStatus.CANCELLED;
+		Client temp = (Client) getOrder(id).orderedBy;
+		temp.newOrder();
+	}
+}

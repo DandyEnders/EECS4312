@@ -1,0 +1,62 @@
+package manager;
+
+import java.util.Hashtable;
+
+import enums.FoodSize;
+import items.FoodItem;
+
+public class MenuManager {
+	
+	Hashtable<String, FoodItem> menuDB;
+	int lastID = 0;
+	
+	private static MenuManager INSTANCE;
+
+	private MenuManager() {
+		this.menuDB = new Hashtable<String, FoodItem>();
+	}
+	
+	public static MenuManager getInstance() {
+		if(INSTANCE == null) {
+			INSTANCE = new MenuManager();
+		}
+		
+		return INSTANCE;
+	}
+	
+	private String fetchNextID() {
+		int result = lastID;
+		lastID++;
+		return "" + result;
+	}
+
+	public void addFoodMenu(String name,
+							double price,
+							String ingredients,
+							String allergens,
+							String dimensions,
+							String subjectCategory,
+							String nutrition
+							) {
+		String id = fetchNextID();
+		FoodItem temp = new FoodItem(id, name, price, FoodSize.MEDIUM, ingredients, allergens, 
+				dimensions, subjectCategory, nutrition);
+		
+		menuDB.put(id, temp);
+	}
+	
+	public void has 
+	
+	public FoodItem getFooditem(String name) {
+		FoodItem temp = menuDB.get("name");
+		
+		FoodItem result = new FoodItem(temp.id, temp.name, temp.price, FoodSize.MEDIUM, temp.ingredients, 
+				temp.allergens, temp.dimensions, temp.subjectCategory, temp.nutrition);
+		
+		return result;
+	}
+	
+	public void removeFoodMenu(String id) {
+		menuDB.remove(id);
+	}
+}

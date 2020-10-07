@@ -1,0 +1,70 @@
+package items;
+
+import java.util.List;
+
+import account.Client;
+import enums.FoodSize;
+import manager.MenuManager;
+import manager.OrderManager;
+
+public class ShoppingCart {
+
+	OrderManager orderDB;
+	MenuManager menuDB;
+	Client cartOwner;
+	FoodOrder currentOrder;
+	
+	public ShoppingCart(Client owner) {
+		this.orderDB = OrderManager.getInstance();
+		this.cartOwner = owner;
+		this.currentOrder = new FoodOrder("-1", owner, null);
+	}
+	
+	public void addItem(String name, FoodSize size) {
+		currentOrder.addFoodItem(name, size);
+	}
+	
+	public void deleteItem(String name, FoodSize size) {
+		currentOrder.removeFoodItem(name, size);
+	}
+	
+	public boolean hasItem(String name) {
+		return currentOrder.hasFoodItem(name);
+	}
+	
+	public FoodItem getMenuItem(String name, FoodSize size) {
+		return currentOrder.getMenuItem(name, size);
+	}
+	
+	public void placeOrder(String deliverAddress) {
+		this.currentOrder.deliverAddress = deliverAddress;
+		orderDB.addOrder(currentOrder);
+	}
+	
+	public List<String> getMenuByCategories(){
+		return menuDB.getMenuByCategories();
+	}
+
+	public String getFoodInfo(String foodName, FoodSize size) {
+		String result = "";
+		FoodItem tempItem = getMenuItem (foodName, size);
+		
+		result += "ingredients: " + tempItem.ingredients + "\n";
+		result += "allergens: " + tempItem.allergens + "\n";
+		result += "dimensions: " + tempItem.dimensions + "\n";
+		result += "subjectCategory: " + tempItem.subjectCategory + "\n";
+		result += "nutrition: " + tempItem.nutrition;
+		return result;
+	}
+
+	public String getCurrentItems() {
+		String result = "";
+		List<String> nameQuantityList = currentOrder.getFoodNameQuantityList();
+		
+		for (String entry: nameQuantityList) {
+			result += entry + "\n";
+		}
+		
+		return result;
+	}
+}

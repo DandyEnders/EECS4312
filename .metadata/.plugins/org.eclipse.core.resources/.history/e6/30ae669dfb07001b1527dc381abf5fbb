@@ -1,0 +1,182 @@
+package test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runners.*;
+
+import account.Client;
+import account.Manager;
+import account.System;
+import enums.FoodSize;
+import enums.OrderStatus;
+import enums.UserPosition;
+import items.FoodOrder;
+import manager.CredentialManager;
+import manager.MenuManager;
+import manager.OrderManager;
+import service.DeliveryService;
+import service.PaymentService;
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class SequenceDiagramTest {
+	
+	static CredentialManager userDB;
+	static OrderManager orderDB;
+	static MenuManager menuDB;
+	
+	static DeliveryService delivery;
+	static PaymentService payment;
+	
+	
+	@BeforeClass
+	public static void initAll() {
+		userDB = CredentialManager.getInstance();
+		userDB.addUser("user123", "123", "Minh", UserPosition.CLIENT, "123-456-7890");
+		userDB.addUser("manager123", "123", "Kevin", UserPosition.MANAGER, "123-456-7891");
+		userDB.addUser("system123", "123", "Jinho", UserPosition.SYSTEM, "123-456-7892");
+		
+		orderDB = OrderManager.getInstance();
+		
+		menuDB = MenuManager.getInstance();
+		menuDB.addFoodMenu("burrito", 1.00, "burrito ingredients", "burrito allergens", "burrito dimension", "meal", "burrito nutrition");
+		menuDB.addFoodMenu("wraps", 1.00, "wraps ingredients", "wraps allergens", "wraps dimension", "meal", "wraps nutrition");
+		menuDB.addFoodMenu("salads", 1.00, "salads ingredients", "salads allergens", "salads dimension", "meal", "salads nutrition");
+		menuDB.addFoodMenu("frozen yogurt", 1.00, "frozen yogurt ingredients", "frozen yogurt allergens", "frozen yogurt dimension", "deseart", "frozen yogurt nutrition");
+		menuDB.addFoodMenu("water", 1.00, "water ingredients", "water allergens", "water dimension", "drink", "water nutrition");
+		menuDB.addFoodMenu("coke", 1.00, "coke ingredients", "coke allergens", "coke dimension", "meal", "coke nutrition");
+		
+		delivery = DeliveryService.getInstance();
+		payment = PaymentService.getInstance();
+	}
+	
+	@Test
+	public void test1clientOrderingFood() {
+		Client clientMinh = (Client) userDB.getAccount("user123", "123");
+		
+		assertEquals("Category", "[meal:coke, salads, wraps, burrito, drink:water, deseart:frozen yogurt]", clientMinh.getMenuByCategories()); // show the menu
+		
+		clientMinh.getFoodInfo("burrito", FoodSize.MEDIUM);
+		clientMinh.chooseFood("burrito", FoodSize.LARGE, 1);
+		assertEquals("Minh's cart has burrito", "burrito:1\n", clientMinh.getCurrentCartItems());
+		clientMinh.chooseFood("frozen yogurt", FoodSize.SMALL, 1);
+		assertEquals("Minh's cart has burrito and yogurt", "burrito:1\nfrozen yogurt:1\n", clientMinh.getCurrentCartItems());
+		
+		
+		clientMinh.removeFood("frozen yogurt", FoodSize.SMALL);
+		clientMinh.getCurrentCartItems(); // see current item;
+		assertEquals(clientMinh.getTotal(), 2.00, 0.001); // check his balance (delivery fee 1.00 + burrito 1.00)
+		
+		clientMinh.placeOrder("Minh's place");
+		clientMinh.payOrder(1.00);
+		assertEquals("order status after payment, not processed", OrderStatus.UNPAID, clientMinh.checkDeliveryStatus()); // check his delivery status
+		
+		payment.successfulPurchase(clientMinh.orderID);
+		assertEquals("order status after payment, processed", OrderStatus.PAID, clientMinh.checkDeliveryStatus());
+		
+		delivery.sendDlievery(clientMinh.orderID);
+		assertEquals("order status while delivery", OrderStatus.DELIVERING, clientMinh.checkDeliveryStatus());
+		
+		FoodOrder minhsOrder = orderDB.getOrder(clientMinh.orderID);
+		
+		delivery.signDelivery(clientMinh.orderID);
+		assertEquals("order status after delivery", OrderStatus.SIGNED_FOR, minhsOrder.status);	
+		
+	}
+	
+	@Test
+	public void test2clientCancelsOrder() {
+		
+		Client clientMinh = (Client) userDB.getAccount("user123", "123");
+		
+		assertEquals("Category", "[meal:coke, salads, wraps, burrito, drink:water, deseart:frozen yogurt]", clientMinh.getMenuByCategories()); // show the menu
+		
+		clientMinh.getFoodInfo("burrito", FoodSize.MEDIUM);
+		clientMinh.chooseFood("burrito", FoodSize.LARGE, 1);
+		assertEquals("Minh's cart has burrito", "burrito:1\n", clientMinh.getCurrentCartItems());
+		clientMinh.chooseFood("frozen yogurt", FoodSize.SMALL, 1);
+		assertEquals("Minh's cart has burrito and yogurt", "burrito:1\nfrozen yogurt:1\n", clientMinh.getCurrentCartItems());
+		
+
+		clientMinh.getCurrentCartItems(); // see current item;
+		assertEquals(clientMinh.getTotal(), 2.00, 0.001); // check his balance (yogurt 1.00 + burrito 1.00 + no delivery fee)
+		
+		
+		clientMinh.placeOrder("Minh's place");
+		
+		
+		clientMinh.payOrder(1.00);
+		assertEquals("order status after payment, not processed", OrderStatus.UNPAID, clientMinh.checkDeliveryStatus()); // check his delivery status
+		
+		payment.successfulPurchase(clientMinh.orderID);
+		assertEquals("order status after payment, processed", OrderStatus.PAID, clientMinh.checkDeliveryStatus());
+		
+		FoodOrder minhsOrder = orderDB.getOrder(clientMinh.orderID);
+		
+		clientMinh.cancelOrder();
+		assertEquals("order status after cancel request", OrderStatus.PAID, clientMinh.checkDeliveryStatus());
+		
+		payment.successfulRefund(clientMinh.orderID);
+		assertEquals("order status after cancellation", OrderStatus.CANCELLED, minhsOrder.status);
+		
+	}
+	
+	@Test
+	public void test3managerManagingOrder() {
+		Manager managerKevin = (Manager) userDB.getAccount("manager123", "123");
+		
+		managerKevin.getOrderInfo();
+		
+		String orderID = managerKevin.addOrder(managerKevin, "Minh's place");
+		assertEquals("order exists", true , orderDB.hasOrder(orderID));
+		
+		managerKevin.changeOrderedPerson(orderID, userDB.getOwner("user123"));
+		assertEquals("orderer's account is user now", userDB.getOwner("user123") ,orderDB.getOrder(orderID).orderedBy);
+		
+		managerKevin.changeDeliveryAddress(orderID, "York University");
+		assertEquals("delivery place changed", "York University", orderDB.getOrder(orderID).deliverAddress);
+		
+		managerKevin.addFood(orderID, "coke", FoodSize.LARGE);
+		assertEquals("coke added in the order", true, orderDB.getOrder(orderID).hasFoodItem("coke"));
+		
+		managerKevin.addFood(orderID, "salads", FoodSize.SMALL);
+		managerKevin.addFood(orderID, "water", FoodSize.MEDIUM);
+		
+		java.lang.System.out.println(menuDB.menuDB.toString());
+		
+		managerKevin.removeFood(orderID, "coke", FoodSize.LARGE);
+		assertEquals("salad added in the order", true, orderDB.getOrder(orderID).hasFoodItem("salads"));
+		assertEquals("water added in the order", true, orderDB.getOrder(orderID).hasFoodItem("water"));
+		assertEquals("coke not in the order", true, !orderDB.getOrder(orderID).hasFoodItem("coke"));
+	}
+	
+	@Test
+	public void test4managerManagingManues() {
+		Manager managerKevin = (Manager) userDB.getAccount("manager123", "123");
+		
+		managerKevin.getMenuByCategories();
+		
+		managerKevin.addFoodMenu("sugarWater", 1, "sugar water ingredient", "sugar water allergens", "sugar water dimensions", "sugar water subjectCategory", "sugar water nutrition");
+		assertEquals("sugarwater added in the menu", true, menuDB.hasFoodItem("sugarWater");
+		
+		managerKevin.getFoodInfo("sugarWater");
+		
+		managerKevin.updateFoodIngredients("sugarWater", "changed sugarWater ingredient");
+		managerKevin.updateFoodAllergens("sugarWater", "changed sugarWater allergens");
+		managerKevin.updateFoodDimensions("sugarWater", "changed sugarWater dimensions");
+		managerKevin.updateFoodSubjectCategory("sugarWater", "changed sugarWater subjectCategory");
+		managerKevin.updateFoodNutrition("sugarWater", "changed sugarWater nutrition");
+		
+		managerKevin.removeFoodMenu("sugarWater");
+	}
+	
+	@Test
+	public void test5systemManagingManager() {
+		System systemJinho = (System) userDB.getAccount("system123", "123");
+	}
+	
+}

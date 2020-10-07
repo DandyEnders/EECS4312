@@ -1,0 +1,18 @@
+package items;
+
+import java.util.List;
+
+import account.UserAccount;
+import enums.FoodSize;
+import enums.OrderStatus;
+
+public class FoodItem {
+
+	String id;
+	double price;
+	String ingredients;
+	String allergens;
+	String dimensions;
+	String subjectCategory;
+	String nutrition;
+}

@@ -1,0 +1,8 @@
+package account;
+
+public class Client extends UserAccount {
+	
+	public Client() {
+		
+	}
+}

@@ -1,0 +1,14 @@
+package account;
+
+public class UserAccount {
+
+	String id;
+	String pwd;
+	String name;
+	
+	public UserAccount (String id, String pwd, String name) {
+		this.id = id;
+		this pwd = pwd;
+		this name = name;
+	}
+}

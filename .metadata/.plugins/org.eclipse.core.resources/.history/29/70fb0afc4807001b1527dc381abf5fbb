@@ -1,0 +1,9 @@
+package manager;
+
+public class CredentialManager {
+
+	public CredentialManager() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

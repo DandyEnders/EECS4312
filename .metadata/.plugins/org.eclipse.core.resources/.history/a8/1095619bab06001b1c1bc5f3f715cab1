@@ -1,0 +1,8 @@
+package implementation;
+
+public class UserAccount {
+
+	String id;
+	String pwd;
+	String name;
+}

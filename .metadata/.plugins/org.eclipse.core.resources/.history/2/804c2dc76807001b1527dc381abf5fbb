@@ -1,0 +1,48 @@
+package items;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import account.Client;
+import enums.FoodSize;
+import manager.MenuManager;
+import manager.OrderManager;
+
+public class ShoppingCart {
+
+	OrderManager orderDB;
+	MenuManager menuDB;
+	Client cartOwner;
+	FoodOrder currentOrder;
+	
+	public ShoppingCart(Client owner) {
+		this.orderDB = OrderManager.getInstance();
+		this.cartOwner = owner;
+		this.currentOrder = new FoodOrder("NULL", owner, null, FoodSize.MEDIUM);
+	}
+	
+	public void addItem(String name, FoodSize size) {
+		currentOrder.addFoodItem(name, size);
+	}
+	
+	public void deleteItem(String name) {
+		currentOrder.removeFoodItem(name);
+	}
+	
+	public boolean hasItem(String name) {
+		return currentOrder.hasFoodItem(name);
+	}
+	
+	public FoodItem getMenuItem(String name) {
+		return currentOrder.getMenuItem(name);
+	}
+	
+	public List<FoodItem> getCurrentOrderList(){
+		currentOrder.getFoodNameList()
+		return null;
+	}
+	
+	public void placeOrder(String deliverAddress) {
+		orderDB.addOrder(this.cartOwner, deliverAddress);
+	}
+}

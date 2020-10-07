@@ -1,0 +1,17 @@
+package account;
+
+import manager.MenuManager;
+import manager.OrderManager;
+
+public class Manager extends UserAccount {
+
+	MenuManager menuDB;
+	OrderManager orderDB;
+	
+	public Manager(String id, String pwd, String name, String phoneNumber) {
+		super(id, pwd, name, phonenumber);
+		
+		this.menuDB = MenuManager.getInstance();
+		this.orderDB = OrderManager.getInstance();
+	}
+}

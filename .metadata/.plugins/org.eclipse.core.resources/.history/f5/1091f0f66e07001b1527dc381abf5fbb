@@ -1,0 +1,60 @@
+package manager;
+
+import java.util.Hashtable;
+
+import account.UserAccount;
+import enums.FoodSize;
+import items.FoodOrder;
+import service.DeliveryService;
+import service.PaymentService;
+
+public class OrderManager {
+	
+	Hashtable<String, FoodOrder> orderDB;
+	PaymentService paymentSystem;
+	DeliveryService deliverySystem;
+	
+	int lastID = 0;
+	
+	private static OrderManager INSTANCE;
+	
+	private OrderManager() {
+		this.orderDB = new Hashtable<String, FoodOrder>();
+		this.paymentSystem = PaymentService.getInstance();
+		this.deliverySystem = DeliveryService.getInstance();
+	}
+	
+	public static OrderManager getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new OrderManager();
+		}
+		return INSTANCE;
+	}
+
+	
+	public void addOrder (	UserAccount orderedBy,
+							String deliverAddress
+						) {
+		
+	}
+	
+	public boolean hasOrder (String id) {
+		return false;
+	}
+	
+	public FoodOrder getOrder (String id) {
+		return null;
+	}
+	
+	public void payOrder (String id) {
+		
+	}
+	
+	public void deliverOrder (String id) {
+		
+	}
+	
+	public void signOrder (String id) {
+		
+	}
+}

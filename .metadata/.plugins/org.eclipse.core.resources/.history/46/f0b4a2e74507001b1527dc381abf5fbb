@@ -1,0 +1,17 @@
+package service;
+
+public class PaymentService {
+	
+	private static PaymentService INSTANCE;
+
+	private PaymentService() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public static PaymentService getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new ClassSingleton();
+		}
+	}
+
+}

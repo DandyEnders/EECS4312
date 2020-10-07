@@ -1,0 +1,9 @@
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="service.DeliveryService"><rhs name\="service.DeliveryService"/></lhs><lhs name\="manager.OrderManager"><rhs name\="manager.OrderManager"/></lhs><lhs name\="java.lang.Enum"><rhs name\="enums.UserPosition"/><rhs name\="enums.FoodSize"/></lhs><lhs name\="java.lang.constant.Constable"><rhs name\="enums.UserPosition"/><rhs name\="enums.FoodSize"/></lhs><lhs name\="enums.UserPosition"><rhs name\="enums.UserPosition"/></lhs><lhs name\="enums.FoodSize"><rhs name\="enums.FoodSize"/></lhs></history>
+content_assist_number_of_computers=12
+content_assist_proposals_background=255,255,255
+content_assist_proposals_foreground=0,0,0
+eclipse.preferences.version=1
+org.eclipse.jdt.ui.formatterprofiles.version=20
+spelling_locale_initialized=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true

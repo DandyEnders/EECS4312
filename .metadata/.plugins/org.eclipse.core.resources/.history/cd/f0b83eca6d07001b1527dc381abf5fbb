@@ -1,0 +1,26 @@
+package service;
+
+public class DeliveryService {
+
+	private static DeliveryService INSTANCE;
+
+	private DeliveryService() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public static DeliveryService getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new DeliveryService();
+		}
+		
+		return INSTANCE;
+	}
+
+	public void sendDlievery(String orderID, String address) {
+		
+	}
+	
+	public void signDelivery(String orderID) {
+		
+	}
+}

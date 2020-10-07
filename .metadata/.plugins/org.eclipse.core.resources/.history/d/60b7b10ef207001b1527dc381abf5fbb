@@ -1,0 +1,58 @@
+package items;
+
+import enums.FoodSize;
+
+public class FoodItem {
+
+	public String id;
+	public String name;
+	public double price;
+	public FoodSize size;
+	public int quantity;
+	public String ingredients;
+	public String allergens;
+	public String dimensions;
+	public String subjectCategory;
+	public String nutrition;
+	
+	public FoodItem(String id,
+					String name,
+					double price,
+					FoodSize size,
+					int quantity,
+					String ingredients,
+					String allergens,
+					String dimensions,
+					String subjectCategory,
+					String nutrition
+			) {
+		this.id = id;
+		this.name = name;
+		this.price = price;
+		this.size = size;
+		this.quantity = quantity;
+		this.ingredients = ingredients;
+		this.allergens = allergens;
+		this.dimensions = dimensions;
+		this.subjectCategory = subjectCategory;
+		this.nutrition = nutrition;
+	}
+	
+	public String getInfo() {
+		String result = "";
+		
+		result += "id:" + id + "\n";
+		result += "name:" + name + "\n";
+		result += "price: " + price + "\n";
+		result += "size: " + size + "\n";
+		result += "quantity: " + quantity + "\n";
+		result += "ingredients: " + ingredients + "\n";
+		result += "allergens: " + allergens + "\n";
+		result += "dimensions: " + dimensions + "\n";
+		result += "subjectCategory: " + subjectCategory + "\n";
+		result += "nutrition: " + nutrition + "\n";
+		
+		return result;
+	}
+
+}

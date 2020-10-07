@@ -1,0 +1,43 @@
+package manager;
+
+import java.util.Hashtable;
+
+import items.FoodItem;
+
+public class MenuManager {
+	
+	Hashtable<String, FoodItem> menuDB;
+	
+	private static MenuManager INSTANCE;
+
+	private MenuManager() {
+		this.menuDB = new Hashtable<String, FoodItem>();
+	}
+	
+	public static MenuManager getInstance() {
+		if(INSTANCE == null) {
+			INSTANCE = new MenuManager();
+		}
+		
+		return INSTANCE;
+	}
+
+	public void addFoodMenu(String name,
+							double price,
+							String ingredients,
+							String allergens,
+							String dimensions,
+							String subjectCategory,
+							String nutrition
+							) {
+		
+	}
+	
+	public FoodItem getFooditem(String name) {
+		return null;
+	}
+	
+	public void removeFoodMenu(String name) {
+		
+	}
+}

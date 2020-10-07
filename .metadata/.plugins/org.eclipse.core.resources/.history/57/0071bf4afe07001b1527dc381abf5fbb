@@ -1,0 +1,14 @@
+package account;
+
+import manager.CredentialManager;
+
+public class System extends UserAccount {
+
+	CredentialManager credentialDB;
+	
+	public System(String id, String pwd, String name, String phoneNumber) {
+		super(id, pwd, name, phoneNumber);
+		
+		this.credentialDB = CredentialManager.getInstance();
+	}
+}

@@ -1,0 +1,20 @@
+package account;
+
+import java.util.List;
+
+import items.ShoppingCart;
+
+public class Client extends UserAccount {
+	
+	public ShoppingCart myCart;
+	
+	public Client(String id, String pwd, String name, String phoneNumber) {
+		super(id, pwd, name, phoneNumber);
+		
+		this.myCart = new ShoppingCart(this);
+	}
+	
+	public List<String> getMenuByCategories(){
+		return myCart.getMenuByCategories();
+	}
+}

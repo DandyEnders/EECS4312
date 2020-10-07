@@ -1,0 +1,8 @@
+package account;
+
+public class Client extends UserAccount {
+	
+	public Client(String id, String pwd, String name) {
+		super(id, pwd, name);
+	}
+}

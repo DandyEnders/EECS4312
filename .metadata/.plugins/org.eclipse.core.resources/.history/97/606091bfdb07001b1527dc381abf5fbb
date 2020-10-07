@@ -1,0 +1,48 @@
+package account;
+
+import java.util.List;
+
+import enums.FoodSize;
+import enums.OrderStatus;
+import items.ShoppingCart;
+import manager.OrderManager;
+
+public class Client extends UserAccount {
+	
+	private ShoppingCart myCart;
+	private OrderManager orderDB;
+	
+	public Client(String id, String pwd, String name, String phoneNumber) {
+		super(id, pwd, name, phoneNumber);
+		
+		this.myCart = new ShoppingCart(this);
+	}
+	
+	public List<String> getMenuByCategories(){
+		return myCart.getMenuByCategories();
+	}
+	
+	public void chooseFood(String foodName, FoodSize size, int quantity) {
+		myCart.addItem(foodName, size);
+	}
+	
+	public void removeFood(String foodName, FoodSize size) {
+		myCart.deleteItem(foodName, size);
+	}
+	
+	public String getCurrentCartItems() {
+		return myCart.getCurrentItems();
+	}
+	
+	public String getFoodInfo(String foodName, FoodSize size) {
+		return myCart.getFoodInfo(foodName, size);
+	}
+	
+	public void placeOrder(String deliverAddress) {
+		myCart.placeOrder(deliverAddress);
+	}
+	
+	public OrderStatus checkDeliveryStatus() {
+		return orderDB.checkOrderStatus(id);
+	}
+}

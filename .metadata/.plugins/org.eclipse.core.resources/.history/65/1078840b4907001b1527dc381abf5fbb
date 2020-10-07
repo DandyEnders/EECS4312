@@ -1,0 +1,17 @@
+package manager;
+
+import java.util.Hashtable;
+
+import account.UserAccount;
+
+public class CredentialManager {
+
+	Hashtable<String, UserAccount> userAccountDB;
+	
+	private static CredentialManager INSTANCE;
+	
+	private CredentialManager() {
+		this.userAccountDB = new Hashtable<String, UserAccount>();
+	}
+
+}

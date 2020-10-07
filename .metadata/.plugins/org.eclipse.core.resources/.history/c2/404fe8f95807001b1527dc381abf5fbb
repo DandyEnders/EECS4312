@@ -1,0 +1,50 @@
+package items;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import account.UserAccount;
+import enums.FoodSize;
+import enums.OrderStatus;
+import manager.MenuManager;
+
+public class FoodOrder {
+
+	public String id;
+	public UserAccount orderedBy;
+	public List<FoodItem> foodList;
+	public String deliverAddress;
+	public OrderStatus status;
+	public FoodSize size;
+	private MenuManager menuDB;
+	
+	public FoodOrder(String id,
+					 UserAccount orderedBy,
+					 String deliverAddress,
+					 FoodSize size
+					) {
+		this.id = id;
+		this.orderedBy = orderedBy;
+		this.foodList = new ArrayList<FoodItem>();
+		this.deliverAddress = deliverAddress;
+		this.status = OrderStatus.UNPAID;
+		this.size = size;
+		this.menuDB = MenuManager.getInstance();
+	}
+	
+	public void addFoodItem(String name) {
+		
+	}
+	
+	public void removeFoodItem(String name) {
+		
+	}
+	
+	public void changeOrderStatus(OrderStatus newStatus) {
+		
+	}
+	
+	public double getTotal() {
+		return 0;
+	}
+}

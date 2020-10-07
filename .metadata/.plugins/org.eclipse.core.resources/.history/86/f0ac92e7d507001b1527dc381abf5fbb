@@ -1,0 +1,27 @@
+package account;
+
+import java.util.List;
+
+import enums.FoodSize;
+import items.ShoppingCart;
+
+public class Client extends UserAccount {
+	
+	private ShoppingCart myCart;
+	
+	public Client(String id, String pwd, String name, String phoneNumber) {
+		super(id, pwd, name, phoneNumber);
+		
+		this.myCart = new ShoppingCart(this);
+	}
+	
+	public List<String> getMenuByCategories(){
+		return myCart.getMenuByCategories();
+	}
+	
+	public void chooseFood(String foodName, FoodSize size) {
+		myCart.addItem(foodName, size);
+	}
+	
+	public v
+}

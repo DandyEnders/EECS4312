@@ -1,0 +1,17 @@
+package items;
+
+import java.util.List;
+
+import account.UserAccount;
+import enums.FoodSize;
+import enums.OrderStatus;
+
+public class FoodItem {
+
+	String id;
+	UserAccount orderedB;
+	List<FoodItem> foodList;
+	String deliverAddress;
+	OrderStatus status;
+	FoodSize size;
+}

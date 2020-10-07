@@ -1,0 +1,14 @@
+package account;
+
+import items.ShoppingCart;
+
+public class Client extends UserAccount {
+	
+	ShoppingCart myCart;
+	
+	public Client(String id, String pwd, String name) {
+		super(id, pwd, name);
+		
+		this.myCart = new ShoppingCart();
+	}
+}

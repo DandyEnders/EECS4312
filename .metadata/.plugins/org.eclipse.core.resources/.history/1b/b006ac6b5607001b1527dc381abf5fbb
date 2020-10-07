@@ -1,0 +1,20 @@
+package account;
+
+public class UserAccount {
+
+	String id;
+	String pwd;
+	String name;
+	boolean isOnline;
+	
+	public UserAccount (String id, String pwd, String name) {
+		this.id = id;
+		this.pwd = pwd;
+		this.name = name;
+		this.isOnline = false;
+	}
+	
+	public boolean login(String id, String pwd) {
+		if (this.id.isEquals(id))
+	}
+}

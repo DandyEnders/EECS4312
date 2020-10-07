@@ -1,0 +1,33 @@
+package items;
+
+public class FoodItem {
+
+	private String id;
+	public String name;
+	public double price;
+	public String ingredients;
+	public String allergens;
+	public String dimensions;
+	public String subjectCategory;
+	public String nutrition;
+	
+	public FoodItem(String id,
+					String name,
+					double price,
+					String ingredients,
+					String allergens,
+					String dimensions,
+					String subjectCategory,
+					String nutrition
+			) {
+		this.id = id;
+		this.name = name;
+		this.price = price;
+		this.ingredients = ingredients;
+		this.allergens = allergens;
+		this.dimensions = dimensions;
+		this.subjectCategory = subjectCategory;
+		this.nutrition = nutrition;
+	}
+
+}

@@ -1,0 +1,126 @@
+package items;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import account.UserAccount;
+import enums.FoodSize;
+import enums.OrderStatus;
+import manager.MenuManager;
+
+public class FoodOrder {
+
+	public String id;
+	public UserAccount orderedBy;
+	public List<FoodItem> foodList;
+	public String deliverAddress;
+	public OrderStatus status;
+	private MenuManager menuDB;
+	
+	public FoodOrder(String id,
+					 UserAccount orderedBy,
+					 String deliverAddress
+					) {
+		this.id = id;
+		this.orderedBy = orderedBy;
+		this.foodList = new ArrayList<FoodItem>();
+		this.deliverAddress = deliverAddress;
+		this.status = OrderStatus.UNPAID;
+		this.menuDB = MenuManager.getInstance();
+	}
+	
+	public void addFoodItem(String name, FoodSize size) {
+		if (getQuantity() <= 9) {
+			boolean isSameFoodWithSizeExist = false;
+			
+			for (FoodItem item: foodList) {
+				if (item.name.equals(name) && item.size.equals(size)) {
+					isSameFoodWithSizeExist = true;
+					item.quantity += 1;
+				}
+			}
+			
+			if (!isSameFoodWithSizeExist) {
+				FoodItem temp = menuDB.getFooditem(name);
+				temp.size = size;
+				foodList.add(temp);
+			}
+		}
+	}
+	
+	public void removeFoodItem(String name, FoodSize size) {
+		FoodItem temp = null;
+		
+		for (FoodItem item: foodList) {
+			if (item.name.equals(name) && item.size.equals(size)) {
+				temp = item;
+			}
+		}
+		foodList.remove(temp);
+	}
+	
+	public boolean hasFoodItem(String name) {
+		boolean result = false;
+		for (FoodItem item: foodList) {
+			if (item.name.equals(name)) {
+				result = true;
+			}
+		}
+		return result;
+	}
+	
+	public List<String> getFoodNameQuantityList() {
+		List<String> result = new ArrayList<String>();
+		
+		for (FoodItem item: foodList) {
+			result.add(item.name + ":" + item.quantity);
+		}
+		
+		return result;
+	}
+	
+	public FoodItem getMenuItem(String name, FoodSize size) {
+		FoodItem result = null;
+		
+		for (FoodItem item: foodList) {
+			if(item.name.equals(name) && item.size.equals(size)) {
+				result = item;
+			}
+		}
+		
+		return result;
+	}
+	
+	public int getQuantity() {
+		int result = 0;
+		for (FoodItem item: foodList) {
+			result += item.quantity;
+		}
+		return result;
+	}
+	
+	public double getTotal() {
+		double result = 0;
+		
+		for (FoodItem item: foodList) {
+			result += item.price;
+		}
+		return result;
+	}
+	
+	public String getInfo() {
+//		public String id;
+//		public UserAccount orderedBy;
+//		public List<FoodItem> foodList;
+//		public String deliverAddress;
+//		public OrderStatus status;
+//		private MenuManager menuDB;
+		
+		String result = "";
+		
+		result += "id: " + id + "\n";
+		result += "orderedBy: " + orderedBy.name + "\n";
+		result += ""
+		
+	}
+}
