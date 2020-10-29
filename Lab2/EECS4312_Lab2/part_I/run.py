@@ -8,11 +8,11 @@ from sklearn.metrics import classification_report
 from sklearn import metrics
 from sklearn import naive_bayes
 
-android_train_file = "../../data/android/training.csv"
-android_test_file = "../../data/android/test.csv"
+android_train_file = "../data/android/training.csv"
+android_test_file = "../data/android/test.csv"
 
-openstack_train_file = "../../data/openstack/training.csv"
-openstack_test_file = "../../data/openstack/test.csv"
+openstack_train_file = "../data/openstack/training.csv"
+openstack_test_file = "../data/openstack/test.csv"
 
 def classify_and_report (label, classifier, train_file, test_file):
     # load the training data as a matrix
@@ -45,7 +45,6 @@ def classify_and_report (label, classifier, train_file, test_file):
     precision = metrics.precision_score(test_target, test_pred, average="weighted", labels=[1])
     recall = metrics.recall_score(test_target, test_pred, average="weighted", labels=[1])
     f1 = metrics.f1_score(test_target, test_pred, average="weighted", labels=[1])
-    # print(classification_report(test_target, test_pred, labels=[0, 1]))
     
     return np.array([precision, recall, f1])
 
@@ -68,9 +67,6 @@ def make_naive_bayes_chart(label, train_file, test_file):
 android_chart_nb = make_naive_bayes_chart("Android", android_train_file, android_test_file)
 openstack_chart_nb = make_naive_bayes_chart("Openstack", openstack_train_file, openstack_test_file)
 
-android_chart_nb
-openstack_chart_nb
-# print("Gaussian Naive Bayes")
-# classify_and_report("Android", GaussianNB(), android_train_file, android_test_file)
-# classify_and_report("Openstack", GaussianNB(), openstack_train_file, openstack_test_file)
+print(android_chart_nb)
+print(openstack_chart_nb)
 
